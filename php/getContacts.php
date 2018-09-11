@@ -28,7 +28,7 @@ $q = stripslashes($_REQUEST["q"]);
   $q = "";
 }
 
-$sql = "SELECT User, Name, Phone, Email FROM Contacts WHERE Name LIKE '$q%'";
+$sql = "SELECT User, Name, Phone, Email FROM Contacts WHERE LOWER(Name) LIKE '$q%'";
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     // output data of each row

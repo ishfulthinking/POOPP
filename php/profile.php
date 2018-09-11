@@ -138,57 +138,54 @@ if ($result->num_rows > 0) {
         top: 30px;
     }
 
-    #myTable {
-        font-family: 'Open Sans', sans-serif !important;
-        border-collapse: collapse;
-        width: 70%;
-        margin-left: auto;
-        margin-right: auto;
+    #contacts {
+    font-family: 'Open Sans', sans-serif !important;
+    border-collapse: collapse;
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
     }
 
-    #myTable td, #customers th {
-        border: 1px solid #ddd;
-        padding: 8px;
+#contacts td, #customers th {
+    border: 1px solid #ddd;
+    padding: 8px;
     }
 
-    #myTable tr:nth-child(even) {
-        background-color: #f2f2f2;
-        }
+#contacts tr:nth-child(even){background-color: #f2f2f2;}
 
-    #myTable tr:hover {
-        background-color: #ddd;
-    }
+#contacts tr:hover {background-color: #ddd;}
 
-    #myTable th {
-        /*padding-top: 12px;
-        padding-bottom: 12px;
-        text-align: left;
-        background-color: dodgerblue;
-        color: white;*/
-        margin: 0px auto;
-        background-color: dodgerblue;
-        color: white
+#contacts th {
+    /*padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: dodgerblue;
+    color: white;*/
+    margin: 0px auto;
+    background-color: dodgerblue;
+    color: white
 
     }
 </style>
 
 <script>
-display();
-    function display() {
+display("");
+    function display(str) {
         //var search = 106;
+        //var prefix = document.getElementById("txtHint").value;
+        makeRequest('getContacts.php?q=' + str.toLowerCase(), function(data) {
 
-        makeRequest('getContacts.php', function(data) {
-            var HTML = '<table id="contacts">';
+        var HTML = '<table id="contacts">';
 
-            HTML += '<tr><th>Name</th><th>Phone Number</th><th>Email Address</th></tr>';
-            var data = data.responseText.split("<br>");
-            for(var i = 0;i<data.length-1;i++){
-              var line = data[i].split(",");
-              HTML += '<tr><td>' + line[0] + '</td><td>' + line[1] + '</td><td>' + line[2] + '</td></tr>';
-            }
-            HTML += '</table>';
+        HTML += '<tr><th>Name</th><th>Phone Number</th><th>Email Address</th></tr>';
+        var data = data.responseText.split("<br>");
+        for(var i = 0;i<data.length-1;i++){
+            var line = data[i].split(",");
+            HTML += '<tr><td>' + line[0] + '</td><td>' + line[1] + '</td><td>' + line[2] + '</td></tr>';
+        }
+        HTML += '</table>';
 
-            document.getElementById('myTable').innerHTML = HTML;
+        document.getElementById('myTable').innerHTML = HTML;
         });
     }
 
@@ -211,21 +208,92 @@ display();
     }
 </script>
 
-
-
+<script>
+function showHint(str) {
+  display(str);
+  return;
+    if (str.length == 0) {
+        document.getElementById("txtHint").innerHTML = "";
+        return;
+    } else {
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("txtHint").innerHTML = this.responseText;
+            }
+        };
+        xmlhttp.open("GET", "gethint.php?q=" + str, true);
+        xmlhttp.send();
+    }
+}
+</script>
+<script>
+    function makeContact() {
+        let regBox = document.getElementById("regBox");
+        let regTriangle = document.getElementById("regTriangle");
+        regBox.style.transition = "opacity 0.2s";
+        regTriangle.style.transition = "opacity 0.2s";
+        if (regBox.style.opacity == 0) {
+            regBox.style.opacity = 1;
+            regTriangle.style.opacity = 1;
+        }
+        else {
+            regBox.style.opacity = 0;
+            regTriangle.style.opacity = 0;
+        }
+    }
+    function confirmContact() {
+        let signup = document.getElementById("addContact");
+        addContact.style.transition = "background-color 0.2s";
+        addContact.style.backgroundColor = "green";
+        setTimeout(makeContact, 500);
+        addContact.style.backgroundColor = "dodgerblue";
+    }
+</script>
 
 <body>
-<!--
+
+<form>
+Search Contact By Name: <input type="text" onkeyup="showHint(this.value)">
+</form>
+  <!--
     <table id="contacts">
         <tr>
-            <th>First Name</th>
-            <th>Last Name</th>
+            <th>Name</th>
             <th>Phone Number</th>
             <th>Email Address</th>
         </tr>
         <tr>
+    <td>Esther Onema</td>
+    <td>407-737-0278</td>
+    <td>esther0nema@hotmail.com</td>
+  </tr>
+  <tr>
+    <td>Ish Perez</td>
+    <td>1800-411-8148</td>
+    <td>ish@live.com</td>
+  </tr>
+  <tr>
+    <td>Josh Wozniak</td>
+    <td>678-999-8212</td>
+    <td>joshWoz@awesome.com</td>
+  </tr>
     </table>
--->
-<button onclick="display()">Generate Table</button>
-<div id="myTable"></div>
+  -->
+    <div id="myTable"></div>
+
+    <p><a href="#" id="register" onclick="makeContact()">Add a new contact</a></p>
+        <form action="../php/addContact.php" method="post">
+            <div id="regTriangle"></div>
+            <div id="regBox">
+                <h3>Add New Contact</h3>
+                <h5>Name</h5>
+                <input type="text" name="Name" value="Whitney Houston" maxlength="12" onfocus="this.value=''"/><br>
+                <h5>Phone Number</h5>
+                <input type="text" name="phoneNumber" value="" maxlength="12" onfocus="this.value=''"/><br>
+                <h5>Email Address</h5>
+                <input type="text" name="emailAddress" value="" maxlength="25" onfocus="this.value=''"/><br><br>
+                <input type="submit" id="addContact" value="Add" onclick="confirmContact()"/><br>
+            </div>
+        </form>
 </body>
