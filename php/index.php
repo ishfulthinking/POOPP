@@ -218,7 +218,7 @@ function alert($msg) {
         <form method="post">
             <h1>Login</h1><br>
             <h4>Username</h4>
-            <input type="text" name="username" value="Amanda Hugginkiss" maxlength="12" onfocus="this.value=''"/><br><br>
+            <input type="text" name="username" placeholder="Amanda Hugginkiss" maxlength="12"/><br><br>
             <h4>Password</h4>
             <input type="password" name="password" maxlength="12"/><br><br>
             <input type="submit" name="submit" value="Log In"/><br>
@@ -229,9 +229,9 @@ function alert($msg) {
             <div id="regBox">
                 <h3>Register</h3>
                 <h5>Username</h5>
-                <input type="text" name="username" value="Pepe Roni" maxlength="12" onfocus="this.value=''"/><br>
+                <input type="text" name="username" placeholder="Pepe Roni" maxlength="12"/><br>
                 <h5>Password</h5>
-                <input type="text" name="password" value="" maxlength="12" onfocus="this.value=''"/><br><br>
+                <input type="text" name="password" value="" maxlength="12"/><br><br>
                 <input type="submit" name="submit" id="signup" value="Sign Up" onclick="confirmRegist()"/><br>
             </div>
         </form>

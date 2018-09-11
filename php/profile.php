@@ -206,9 +206,7 @@ display("");
         request.open("GET", url, true);
         request.send();
     }
-</script>
 
-<script>
   function showHint(str) {
     display(str);
   }
@@ -257,17 +255,19 @@ Search Contact By Name: <input type="text" onkeyup="showHint(this.value)">
     <div id="myTable"></div>
 
     <p><a href="#" id="register" onclick="makeContact()">Add a new contact</a></p>
+    <p><a href="logout.php" id="logout">Logout</a></p>
         <form method="post">
             <div id="regTriangle"></div>
             <div id="regBox">
                 <h3>Add New Contact</h3>
                 <h5>Name</h5>
-                <input type="text" id="name" name="name" value="Whitney Houston" maxlength="12" onfocus="this.value=''"/><br>
+                <input type="text" id="name" name="name" placeholder="Whitney Houston" maxlength="12"/><br>
                 <h5>Phone Number</h5>
-                <input type="text" id="phone" name="phone" value="" maxlength="12" onfocus="this.value=''"/><br>
+                <input type="text" id="phone" name="phone" value="" maxlength="12"/><br>
                 <h5>Email Address</h5>
-                <input type="text" id="email" name="email" value="" maxlength="25" onfocus="this.value=''"/><br><br>
+                <input type="text" id="email" name="email" value="" maxlength="25"/><br><br>
                 <input type="button" id="addContact" value="Add" onclick="confirmContact()"/><br>
             </div>
         </form>
+
 </body>
