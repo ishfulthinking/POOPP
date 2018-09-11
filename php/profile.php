@@ -177,7 +177,7 @@ display();
     function display() {
         //var search = 106;
 
-        makeRequest('php/getContacts.php', function(data) {
+        makeRequest('getContacts.php', function(data) {
             var HTML = '<table id="contacts">';
 
             HTML += '<tr><th>Name</th><th>Phone Number</th><th>Email Address</th></tr>';
