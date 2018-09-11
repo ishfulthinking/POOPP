@@ -208,7 +208,7 @@ function alert($msg) {
         signup.style.backgroundColor = "dodgerblue";
         xhttp.open("POST", "../php/signup.php", false);
         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xhttp.send("username=" + user + "password=" + pass);
+        xhttp.send("username=" + user + "&password=" + pass);
         //alert(xhttp.responseText);
         }
 </script>

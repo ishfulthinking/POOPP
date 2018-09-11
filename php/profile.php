@@ -226,8 +226,7 @@ function showHint(str) {
         xmlhttp.send();
     }
 }
-</script>
-<script>
+
     function makeContact() {
         let regBox = document.getElementById("regBox");
         let regTriangle = document.getElementById("regTriangle");
@@ -242,13 +241,25 @@ function showHint(str) {
             regTriangle.style.opacity = 0;
         }
     }
+
     function confirmContact() {
         let signup = document.getElementById("addContact");
         addContact.style.transition = "background-color 0.2s";
         addContact.style.backgroundColor = "green";
         setTimeout(makeContact, 500);
         addContact.style.backgroundColor = "dodgerblue";
-    }
+
+        let name = document.getElementById("name").value;
+        let phone = document.getElementById("phone").value;
+        let email = document.getElementById("email").value;
+
+        var xhttp = new XMLHttpRequest();
+
+        xhttp.open("POST", "addContact.php", true);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.send("name=" + name + "&phone=" + phone + "&email=" + email);
+        display("");
+      }
 </script>
 
 <body>
@@ -256,44 +267,21 @@ function showHint(str) {
 <form>
 Search Contact By Name: <input type="text" onkeyup="showHint(this.value)">
 </form>
-  <!--
-    <table id="contacts">
-        <tr>
-            <th>Name</th>
-            <th>Phone Number</th>
-            <th>Email Address</th>
-        </tr>
-        <tr>
-    <td>Esther Onema</td>
-    <td>407-737-0278</td>
-    <td>esther0nema@hotmail.com</td>
-  </tr>
-  <tr>
-    <td>Ish Perez</td>
-    <td>1800-411-8148</td>
-    <td>ish@live.com</td>
-  </tr>
-  <tr>
-    <td>Josh Wozniak</td>
-    <td>678-999-8212</td>
-    <td>joshWoz@awesome.com</td>
-  </tr>
-    </table>
-  -->
+
     <div id="myTable"></div>
 
     <p><a href="#" id="register" onclick="makeContact()">Add a new contact</a></p>
-        <form action="../php/addContact.php" method="post">
+        <form method="post">
             <div id="regTriangle"></div>
             <div id="regBox">
                 <h3>Add New Contact</h3>
                 <h5>Name</h5>
-                <input type="text" name="Name" value="Whitney Houston" maxlength="12" onfocus="this.value=''"/><br>
+                <input type="text" id="name" name="name" value="Whitney Houston" maxlength="12" onfocus="this.value=''"/><br>
                 <h5>Phone Number</h5>
-                <input type="text" name="phoneNumber" value="" maxlength="12" onfocus="this.value=''"/><br>
+                <input type="text" id="phone" name="phone" value="" maxlength="12" onfocus="this.value=''"/><br>
                 <h5>Email Address</h5>
-                <input type="text" name="emailAddress" value="" maxlength="25" onfocus="this.value=''"/><br><br>
-                <input type="submit" id="addContact" value="Add" onclick="confirmContact()"/><br>
+                <input type="text" id="email" name="email" value="" maxlength="25" onfocus="this.value=''"/><br><br>
+                <input type="button" id="addContact" value="Add" onclick="confirmContact()"/><br>
             </div>
         </form>
 </body>
