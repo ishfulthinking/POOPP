@@ -169,8 +169,13 @@ if ($result->num_rows > 0) {
 </style>
 
 <script>
-display("");
-    function display(str) {
+display();
+setInterval(display(), 1000);
+    function display() {
+        var str = "";
+        if(document.getElementById("search") != null) {
+          str = document.getElementById("search").value;
+        }
         //var search = 106;
         //var prefix = document.getElementById("txtHint").value;
         makeRequest('getContacts.php?q=' + str.toLowerCase(), function(data) {
@@ -208,7 +213,7 @@ display("");
     }
 
   function showHint(str) {
-    display(str);
+    display();
   }
 
     function makeContact() {
@@ -242,14 +247,15 @@ display("");
         xhttp.open("POST", "addContact.php", true);
         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xhttp.send("name=" + name + "&phone=" + phone + "&email=" + email);
-        setTimeout(display(""), 500);
+        document.getElementById("search").value = "";
+        display();
       }
 </script>
 
 <body>
 
 <form>
-Search Contact By Name: <input type="text" onkeyup="showHint(this.value)">
+Search Contact By Name: <input type="text" value="" id="search" onkeyup="showHint(this.value)">
 </form>
 
     <div id="myTable"></div>
