@@ -209,23 +209,9 @@ display("");
 </script>
 
 <script>
-function showHint(str) {
-  display(str);
-  return;
-    if (str.length == 0) {
-        document.getElementById("txtHint").innerHTML = "";
-        return;
-    } else {
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("txtHint").innerHTML = this.responseText;
-            }
-        };
-        xmlhttp.open("GET", "gethint.php?q=" + str, true);
-        xmlhttp.send();
-    }
-}
+  function showHint(str) {
+    display(str);
+  }
 
     function makeContact() {
         let regBox = document.getElementById("regBox");
@@ -258,7 +244,7 @@ function showHint(str) {
         xhttp.open("POST", "addContact.php", true);
         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xhttp.send("name=" + name + "&phone=" + phone + "&email=" + email);
-        display("");
+        setTimeout(display(""), 500);
       }
 </script>
 
